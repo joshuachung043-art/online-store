@@ -64,4 +64,20 @@ function clearCart() {
   renderCart();
 }
 
+function checkout() {
+  if (cart.length === 0) {
+    alert("Cart is empty!");
+    return;
+  }
+
+  const total = cart.reduce((sum, i) => sum + i.price, 0);
+  const body =
+    cart.map(i => `${i.name} - NT$${i.price} (${i.size})`).join("\n") +
+    `\n\nTotal: NT$${total}\nPlease pay first.`;
+
+  window.location.href =
+    "mailto:joshuachung043@gmail.com?subject=Food Order&body=" +
+    encodeURIComponent(body);
+}
+
 loadAllProducts();
