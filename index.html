@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Food Store</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Food Store</title>
 
-  <!-- Link CSS -->
-  <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
@@ -21,10 +20,94 @@
   <div id="total">Total: NT$0</div>
   <br>
   <button onclick="clearCart()">Clear Cart</button>
+  <button onclick="checkout()">Checkout</button>
 </div>
 
-<!-- Link JS -->
-<script src="script.js"></script>
+<script>
+const products = {
+  Snack: [
+    { name: "Potato Chips", price: 40, size: "60g", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-bQjalt2p-tncrYDq9gpoBIN3gNntLtwURg&s" },
+    { name: "Chocolate Bar", price: 45, size: "50g", img: "https://web.hocom.tw/Uploads/Product/186957_9w1smb9z.jpg" },
+    { name: "Haribo Goldbears", price: 45, size: "80g", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFfVLxzS642ZZrLQHqhtyi_l9eqFH1jvcUZQ&s" },
+    { name: "Pocky", price: 40, size: "45g", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwnp66KXAAnmNHdFVgIe3km620-2vXBKypzA&s" }
+  ],
+  Fruit: [
+    { name: "Banana", price: 20, size: "120g", img: "https://www.millerchemical.com/wp-content/uploads/2021/03/iStock-1184345169.png" },
+    { name: "Orange", price: 20, size: "150g", img: "https://tiimg.tistatic.com/fp/1/007/247/natural-fresh-orange-fruits-additional-benefit-to-health-pure-healthy-finest-quality-orange-color-891.jpg" }
+  ],
+  Drink: [
+    { name: "Water", price: 49, size: "600mL", img: "https://www.ihergo.com/photo/product/82/750_1435482_1695011081925.jpg" },
+    { name: "Orange Juice", price: 45, size: "350mL", img: "https://image.10mart.com.tw/public/image/product/2024-08-29/283fa47c27cb85dd0f83c286ab1734e3/1000x1000.jpg" },
+    { name: "Apple Juice", price: 45, size: "350mL", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5UQqh4z6yupgyqUA0T52L1kwAH8SoeELN1A&s" },
+    { name: "Milk", price: 40, size: "450mL", img: "https://image.10mart.com.tw/public/image/product/2024-09-02/00c9d93830bb06314973a2b3d1393397/1000x1000.jpg" },
+    { name: "Yogurt", price: 30, size: "300mL", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1oCGpjWYgKoTCcy6mEJNPm1Yord_MCI0l9A&s" }
+  ]
+};
+
+let cart = [];
+
+function loadAllProducts() {
+  const list = document.getElementById("productList");
+  const allItems = Object.values(products).flat();
+
+  list.innerHTML = allItems.map((item, index) => `
+    <div class="item">
+      <img src="${item.img}">
+      <h3>${item.name}</h3>
+      <p>${item.size}</p>
+      <p>NT$${item.price}</p>
+      <button onclick="addToCart(${index})">Add to Cart</button>
+    </div>
+  `).join("");
+}
+
+function addToCart(index) {
+  const allItems = Object.values(products).flat();
+  cart.push(allItems[index]);
+  renderCart();
+}
+
+function renderCart() {
+  const cartDiv = document.getElementById("cart");
+  const totalDiv = document.getElementById("total");
+
+  if (cart.length === 0) {
+    cartDiv.innerHTML = "(empty)";
+    totalDiv.innerHTML = "Total: NT$0";
+    return;
+  }
+
+  cartDiv.innerHTML = cart.map((i, idx) =>
+    `${idx + 1}. ${i.name} (${i.size}) - NT$${i.price}`
+  ).join("<br>");
+
+  const total = cart.reduce((sum, i) => sum + i.price, 0);
+  totalDiv.innerHTML = `Total: NT$${total}`;
+}
+
+function clearCart() {
+  cart = [];
+  renderCart();
+}
+
+function checkout() {
+  if (cart.length === 0) {
+    alert("Cart is empty!");
+    return;
+  }
+
+  const total = cart.reduce((sum, i) => sum + i.price, 0);
+  const body =
+    cart.map(i => `${i.name} - NT$${i.price} (${i.size})`).join("\n") +
+    `\n\nTotal: NT$${total}\nPlease pay first.`;
+
+  window.location.href =
+    "mailto:joshuachung043@gmail.com?subject=Food Order&body=" +
+    encodeURIComponent(body);
+}
+
+loadAllProducts();
+</script>
 
 </body>
 </html>
