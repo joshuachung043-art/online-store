@@ -1,83 +1,225 @@
-const products = {
-  Snack: [
-    { name: "Potato Chips", price: 40, size: "60g", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-bQjalt2p-tncrYDq9gpoBIN3gNntLtwURg&s" },
-    { name: "Chocolate Bar", price: 45, size: "50g", img: "https://web.hocom.tw/Uploads/Product/186957_9w1smb9z.jpg" },
-    { name: "Haribo Goldbears", price: 45, size: "80g", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFfVLxzS642ZZrLQHqhtyi_l9eqFH1jvcUZQ&s" },
-    { name: "Pocky", price: 40, size: "45g", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwnp66KXAAnmNHdFVgIe3km620-2vXBKypzA&s" }
-  ],
-  Fruit: [
-    { name: "Banana", price: 20, size: "120g", img: "https://www.millerchemical.com/wp-content/uploads/2021/03/iStock-1184345169.png" },
-    { name: "Orange", price: 20, size: "150g", img: "https://tiimg.tistatic.com/fp/1/007/247/natural-fresh-orange-fruits-additional-benefit-to-health-pure-healthy-finest-quality-orange-color-891.jpg" }
-  ],
-  Drink: [
-    { name: "Water", price: 49, size: "600mL", img: "https://www.ihergo.com/photo/product/82/750_1435482_1695011081925.jpg" },
-    { name: "Orange Juice", price: 45, size: "350mL", img: "https://image.10mart.com.tw/public/image/product/2024-08-29/283fa47c27cb85dd0f83c286ab1734e3/1000x1000.jpg" },
-    { name: "Apple Juice", price: 45, size: "350mL", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5UQqh4z6yupgyqUA0T52L1kwAH8SoeELN1A&s" },
-    { name: "Milk", price: 40, size: "450mL", img: "https://image.10mart.com.tw/public/image/product/2024-09-02/00c9d93830bb06314973a2b3d1393397/1000x1000.jpg" },
-    { name: "Yogurt", price: 30, size: "300mL", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1oCGpjWYgKoTCcy6mEJNPm1Yord_MCI0l9A&s" }
-  ]
-};
-
-let cart = [];
-
-function loadAllProducts() {
-  const list = document.getElementById("productList");
-  const allItems = Object.values(products).flat();
-
-  list.innerHTML = allItems.map((item, index) => `
-    <div class="item">
-      <img src="${item.img}">
-      <h3>${item.name}</h3>
-      <p>${item.size}</p>
-      <p>NT$${item.price}</p>
-      <button onclick="addToCart(${index})">Add to Cart</button>
-    </div>
-  `).join("");
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #f6f8ff, #eef2ff);
+  padding: 20px;
+  margin: 0;
 }
 
-function addToCart(index) {
-  const allItems = Object.values(products).flat();
-  cart.push(allItems[index]);
-  renderCart();
+/* NAVBAR */
+.navbar {
+  background: #4f46e5;
+  color: white;
+
+  padding: 15px 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-radius: 12px;
+
+  margin-bottom: 20px;
 }
 
-function renderCart() {
-  const cartDiv = document.getElementById("cart");
-  const totalDiv = document.getElementById("total");
+.nav-links a {
+  color: white;
+  text-decoration: none;
 
-  if (cart.length === 0) {
-    cartDiv.innerHTML = "(empty)";
-    totalDiv.innerHTML = "Total: NT$0";
-    return;
-  }
+  margin-left: 20px;
 
-  cartDiv.innerHTML = cart.map((i, idx) =>
-    `${idx + 1}. ${i.name} (${i.size}) - NT$${i.price}`
-  ).join("<br>");
-
-  const total = cart.reduce((sum, i) => sum + i.price, 0);
-  totalDiv.innerHTML = `Total: NT$${total}`;
+  font-weight: bold;
 }
 
-function clearCart() {
-  cart = [];
-  renderCart();
+.nav-links a:hover {
+  text-decoration: underline;
 }
 
-function checkout() {
-  if (cart.length === 0) {
-    alert("Cart is empty!");
-    return;
-  }
+/* HOME */
+.hero {
+  background: white;
 
-  const total = cart.reduce((sum, i) => sum + i.price, 0);
-  const body =
-    cart.map(i => `${i.name} - NT$${i.price} (${i.size})`).join("\n") +
-    `\n\nTotal: NT$${total}\nPlease pay first.`;
+  padding: 30px;
 
-  window.location.href =
-    "mailto:joshuachung043@gmail.com?subject=Food Order&body=" +
-    encodeURIComponent(body);
+  border-radius: 16px;
+
+  text-align: center;
+
+  margin-bottom: 30px;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
-loadAllProducts();
+.hero img {
+  width: 100%;
+  max-width: 900px;
+
+  border-radius: 16px;
+
+  margin-top: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.title {
+  text-align: center;
+}
+
+/* PRODUCTS */
+.section {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+
+  gap: 16px;
+}
+
+.item {
+  background: white;
+
+  border-radius: 12px;
+
+  padding: 12px;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+
+  text-align: center;
+}
+
+.item img {
+  width: 120px;
+  height: 120px;
+
+  object-fit: contain;
+
+  border-radius: 10px;
+}
+
+/* BUTTONS */
+button {
+  margin-top: 8px;
+
+  padding: 8px 14px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #4f46e5;
+
+  color: white;
+
+  cursor: pointer;
+}
+
+button:hover {
+  background: #4338ca;
+}
+
+/* CART */
+#cartBox {
+  margin-top: 30px;
+
+  background: white;
+
+  padding: 20px;
+
+  border-radius: 16px;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+#total {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* FORMS */
+.form-section {
+  display: flex;
+
+  justify-content: center;
+
+  margin-top: 40px;
+}
+
+.form-box {
+  background: white;
+
+  width: 320px;
+
+  padding: 20px;
+
+  border-radius: 16px;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.form-box h2 {
+  text-align: center;
+}
+
+.form-box input {
+  width: 100%;
+
+  padding: 10px;
+
+  margin-top: 12px;
+
+  border: 1px solid #ccc;
+
+  border-radius: 8px;
+
+  box-sizing: border-box;
+}
+
+/* MODAL */
+.modal {
+  display: none;
+
+  position: fixed;
+
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background: white;
+
+  width: 320px;
+
+  margin: 100px auto;
+
+  padding: 20px;
+
+  border-radius: 16px;
+
+  text-align: center;
+
+  position: relative;
+}
+
+.modal-content img {
+  width: 150px;
+  height: 150px;
+
+  object-fit: contain;
+}
+
+.close {
+  position: absolute;
+
+  right: 15px;
+  top: 10px;
+
+  font-size: 28px;
+
+  cursor: pointer;
+}
