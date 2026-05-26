@@ -85,6 +85,9 @@ const products = {
 
 let cart = [];
 
+/* SAVE REGISTER USER */
+let savedUser = null;
+
 /* LOAD PRODUCTS */
 function loadAllProducts() {
 
@@ -138,6 +141,7 @@ function showDetails(index) {
 }
 
 function closeModal() {
+
   document.getElementById("productModal").style.display = "none";
 }
 
@@ -203,9 +207,23 @@ function login() {
 
   const password = document.getElementById("loginPassword").value;
 
-  if (email === "" || password === "") {
+  if (savedUser === null) {
 
-    alert("Please fill in all login fields.");
+    alert("Please register first.");
+
+    return;
+  }
+
+  if (email !== savedUser.email) {
+
+    alert("Wrong email.");
+
+    return;
+  }
+
+  if (password !== savedUser.password) {
+
+    alert("Wrong password.");
 
     return;
   }
@@ -213,6 +231,9 @@ function login() {
   document.getElementById("authPage").style.display = "none";
 
   document.getElementById("mainWebsite").style.display = "block";
+
+  document.getElementById("welcomeUser").innerText =
+    "Welcome, " + savedUser.name + " 👋";
 }
 
 /* REGISTER */
@@ -231,11 +252,20 @@ function register() {
     return;
   }
 
+  savedUser = {
+    name: name,
+    email: email,
+    password: password
+  };
+
   alert("Account created successfully!");
 
   document.getElementById("authPage").style.display = "none";
 
   document.getElementById("mainWebsite").style.display = "block";
+
+  document.getElementById("welcomeUser").innerText =
+    "Welcome, " + savedUser.name + " 👋";
 }
 
 /* START WEBSITE */
