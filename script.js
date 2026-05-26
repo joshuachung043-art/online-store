@@ -85,9 +85,6 @@ const products = {
 
 let cart = [];
 
-/* SAVE REGISTER USER */
-let savedUser = null;
-
 /* LOAD PRODUCTS */
 function loadAllProducts() {
 
@@ -207,6 +204,9 @@ function login() {
 
   const password = document.getElementById("loginPassword").value;
 
+  const savedUser =
+    JSON.parse(localStorage.getItem("foodUser"));
+
   if (savedUser === null) {
 
     alert("Please register first.");
@@ -252,11 +252,16 @@ function register() {
     return;
   }
 
-  savedUser = {
+  const user = {
     name: name,
     email: email,
     password: password
   };
+
+  localStorage.setItem(
+    "foodUser",
+    JSON.stringify(user)
+  );
 
   alert("Account created successfully!");
 
@@ -265,7 +270,7 @@ function register() {
   document.getElementById("mainWebsite").style.display = "block";
 
   document.getElementById("welcomeUser").innerText =
-    "Welcome, " + savedUser.name + " 👋";
+    "Welcome, " + user.name + " 👋";
 }
 
 /* START WEBSITE */
