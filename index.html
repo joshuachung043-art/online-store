@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Food Store</title>
 
   <link rel="stylesheet" href="style.css">
@@ -10,111 +11,123 @@
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-  <h2>🍴 Food Shop</h2>
+<!-- LOGIN + REGISTER PAGE -->
+<div id="authPage">
 
-  <div class="nav-links">
-    <a href="#home">Home</a>
-    <a href="#products">Products</a>
-    <a href="#cartBox">Cart</a>
-    <a href="#login">Login</a>
-    <a href="#register">Register</a>
-  </div>
-</nav>
+  <div class="auth-container">
 
-<!-- HOME -->
-<section id="home" class="hero">
-  <h1>Welcome to Food Shop</h1>
+    <h1>🍴 Food Shop</h1>
 
-  <p>
-    Fresh snacks, drinks, and fruits at affordable prices.
-  </p>
+    <!-- LOGIN -->
+    <div class="form-box">
 
-  <img
-    src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200"
-    alt="Food Banner"
-  >
-</section>
+      <h2>Login</h2>
 
-<!-- PRODUCTS -->
-<h1 id="products" class="title">Products</h1>
+      <input type="email" id="loginEmail" placeholder="Email">
 
-<div id="productList" class="section"></div>
+      <input type="password" id="loginPassword" placeholder="Password">
 
-<!-- PRODUCT DETAILS MODAL -->
-<div id="productModal" class="modal">
+      <button onclick="login()">Login</button>
 
-  <div class="modal-content">
+    </div>
 
-    <span class="close" onclick="closeModal()">&times;</span>
+    <!-- REGISTER -->
+    <div class="form-box">
 
-    <img id="modalImg">
+      <h2>Register</h2>
 
-    <h2 id="modalName"></h2>
+      <input type="text" id="registerName" placeholder="Full Name">
 
-    <p id="modalSize"></p>
+      <input type="email" id="registerEmail" placeholder="Email">
 
-    <p id="modalPrice"></p>
+      <input type="password" id="registerPassword" placeholder="Password">
 
-    <p id="modalDesc"></p>
+      <button onclick="register()">Create Account</button>
 
-    <button id="modalBtn">Add to Cart</button>
+    </div>
 
   </div>
 
 </div>
 
-<!-- CART -->
-<div id="cartBox">
-  <h2>🛒 My Cart</h2>
+<!-- MAIN WEBSITE -->
+<div id="mainWebsite" style="display:none;">
 
-  <div id="cart">(empty)</div>
+  <!-- NAVBAR -->
+  <nav class="navbar">
 
-  <div id="total">Total: NT$0</div>
+    <h2>🍴 Food Shop</h2>
 
-  <br>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#products">Products</a>
+      <a href="#cartBox">Cart</a>
+    </div>
 
-  <button onclick="clearCart()">Clear Cart</button>
+  </nav>
 
-  <button onclick="checkout()">Checkout</button>
+  <!-- HOME -->
+  <section id="home" class="hero">
+
+    <h1>Welcome to Food Shop</h1>
+
+    <p>
+      Fresh snacks, drinks, and fruits at affordable prices.
+    </p>
+
+    <img
+      src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200"
+      alt="Food Banner"
+    >
+
+  </section>
+
+  <!-- PRODUCTS -->
+  <h1 id="products" class="title">Products</h1>
+
+  <div id="productList" class="section"></div>
+
+  <!-- PRODUCT DETAILS -->
+  <div id="productModal" class="modal">
+
+    <div class="modal-content">
+
+      <span class="close" onclick="closeModal()">&times;</span>
+
+      <img id="modalImg">
+
+      <h2 id="modalName"></h2>
+
+      <p id="modalSize"></p>
+
+      <p id="modalPrice"></p>
+
+      <p id="modalDesc"></p>
+
+      <button id="modalBtn">Add to Cart</button>
+
+    </div>
+
+  </div>
+
+  <!-- CART -->
+  <div id="cartBox">
+
+    <h2>🛒 My Cart</h2>
+
+    <div id="cart">(empty)</div>
+
+    <div id="total">Total: NT$0</div>
+
+    <br>
+
+    <button onclick="clearCart()">Clear Cart</button>
+
+    <button onclick="checkout()">Checkout</button>
+
+  </div>
+
 </div>
-
-<!-- LOGIN -->
-<section id="login" class="form-section">
-
-  <div class="form-box">
-
-    <h2>Login</h2>
-
-    <input type="email" placeholder="Email">
-
-    <input type="password" placeholder="Password">
-
-    <button>Login</button>
-
-  </div>
-
-</section>
-
-<!-- REGISTER -->
-<section id="register" class="form-section">
-
-  <div class="form-box">
-
-    <h2>Register</h2>
-
-    <input type="text" placeholder="Full Name">
-
-    <input type="email" placeholder="Email">
-
-    <input type="password" placeholder="Password">
-
-    <button>Create Account</button>
-
-  </div>
-
-</section>
 
 <script src="script.js"></script>
 
