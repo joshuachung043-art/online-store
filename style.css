@@ -41,6 +41,11 @@ body {
   text-decoration: underline;
 }
 
+.welcome-user {
+  text-align: center;
+  margin-top: 10px;
+}
+
 /* HOME */
 .hero {
   background: white;
